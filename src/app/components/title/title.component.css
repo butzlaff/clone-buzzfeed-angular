@@ -1,0 +1,11 @@
+.quizz_logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.quizz_logo > h1 {
+  margin-top: 2rem;
+}

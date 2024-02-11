@@ -1,8 +1,9 @@
 import { NgIf, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { z } from 'zod';
 import questionsJson from 'src/assets/data/quizz_questions.json'
-
+import { FinishedComponent } from '../finished/finished.component';
+import { TitleComponent } from '../title/title.component';
 
 const optionsSchema = z.object({
   id: z.number(),
@@ -32,35 +33,35 @@ type Options = z.infer<typeof optionsSchema>
 @Component({
   selector: 'app-quizz',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, FinishedComponent, TitleComponent],
   templateUrl: './quizz.component.html',
   styleUrl: './quizz.component.css'
 })
 export class QuizzComponent implements OnInit{
-  title: string = "";
+  protected title = signal("");
 
-  questions: Questions[] = [] 
-  questionSelected: Questions = {
+  protected questions: Questions[] = [] 
+  protected questionSelected: Questions = {
     id: 0,
     question: "",
     options: []
   };
 
-  answers: string[] = [];
-  answerSelected: string = "";
+  protected answers: string[] = [];
+  protected answerSelected = signal("");
 
-  finished: boolean = false;
+  protected finished = signal(false);
 
-  questionIndex = 0;
-  questionMaxIndex = 0;
+  protected questionIndex = 0;
+  protected questionMaxIndex = 0;
 
-  options: Options[] = [];
+  protected options: Options[] = [];
 
   constructor() { }
 
   ngOnInit() {
     if (questionsJson) {
-      this.title = questionsJson.title;
+      this.title.set(questionsJson.title);
       this.questions = questionsJson.questions;
       this.questionSelected = this.questions[this.questionIndex];
       this.options = this.questionSelected.options;
@@ -80,9 +81,9 @@ export class QuizzComponent implements OnInit{
       }
     }
     if (answerCounts.A > answerCounts.B) {
-      this.answerSelected = questionsJson.results.A;
+      this.answerSelected.set(questionsJson.results.A);
     } else {
-      this.answerSelected = questionsJson.results.B;
+      this.answerSelected.set(questionsJson.results.B);
     }
   }
   // Add the methods to handle the click event
@@ -97,7 +98,7 @@ export class QuizzComponent implements OnInit{
       this.questionMaxIndex;
     }
     else {
-      this.finished = true;
+      this.finished.update(current => !current);
       this.calculateResult();
     }
   }
