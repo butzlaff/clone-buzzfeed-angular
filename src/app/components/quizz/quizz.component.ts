@@ -17,16 +17,16 @@ const questionsSchema = z.object({
   options: z.array(optionsSchema)
 });
 
-const questionSchema = z.object({
-  title: z.string(),
-  questions: z.array(questionsSchema),
-  results: z.object({
-    A: z.string(),
-    B: z.string()
-  })
-});
+// const questionSchema = z.object({
+//   title: z.string(),
+//   questions: z.array(questionsSchema),
+//   results: z.object({
+//     A: z.string(),
+//     B: z.string()
+//   })
+// });
 
-type Question = z.infer<typeof questionSchema>
+// type Question = z.infer<typeof questionSchema>
 type Questions = z.infer<typeof questionsSchema>
 type Options = z.infer<typeof optionsSchema>
 
