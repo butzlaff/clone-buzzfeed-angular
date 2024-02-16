@@ -1,19 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-finished',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   templateUrl: './finished.component.html',
   styleUrl: './finished.component.css'
 })
-export class FinishedComponent implements OnInit {
+export class FinishedComponent {
 
-  @Input() finished: boolean = false;
   @Input() answerSelected: string = "";
+
   constructor() { }
-  ngOnInit() {
-    console.log('FinishedComponent initialized');
-  }
+
 }

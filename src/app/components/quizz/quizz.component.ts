@@ -1,4 +1,3 @@
-import { NgIf, NgFor } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { z } from 'zod';
 import questionsJson from 'src/assets/data/quizz_questions.json'
@@ -17,23 +16,13 @@ const questionsSchema = z.object({
   options: z.array(optionsSchema)
 });
 
-// const questionSchema = z.object({
-//   title: z.string(),
-//   questions: z.array(questionsSchema),
-//   results: z.object({
-//     A: z.string(),
-//     B: z.string()
-//   })
-// });
-
-// type Question = z.infer<typeof questionSchema>
 type Questions = z.infer<typeof questionsSchema>
 type Options = z.infer<typeof optionsSchema>
 
 @Component({
   selector: 'app-quizz',
   standalone: true,
-  imports: [NgIf, NgFor, FinishedComponent, TitleComponent],
+  imports: [FinishedComponent, TitleComponent],
   templateUrl: './quizz.component.html',
   styleUrl: './quizz.component.css'
 })

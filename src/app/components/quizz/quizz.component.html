@@ -2,21 +2,24 @@
   
   <app-title [title]="title()"></app-title> 
 
-  <div *ngIf="!finished()" class="quizz_question">
-    <h3>{{questionSelected.question}}</h3>
-  </div>
+  @if (finished()) {
+    <app-finished 
+      [answerSelected]="answerSelected()"
+    />
+  } @else {
+    <div class="quizz_question">
+      <h3>{{questionSelected.question}}</h3>
+    </div>
 
-  <div *ngIf="!finished()" class="quizz_options">
-    <button 
-      *ngFor="let option of options" 
-      (click)="handleClick(option.alias)"
-      class="btn-option">
-      {{ option.name }}
-    </button>
-  </div>
+    <div class="quizz_options">
+      @for (option of options; track option.id) {
+        <button 
+          (click)="handleClick(option.alias)"
+          class="btn-option">
+          {{ option.name }}
+        </button>
+      }
+    </div>
+  }
 
-  <app-finished 
-    [finished]="finished()"
-    [answerSelected]="answerSelected()"
-  />
 </div>
